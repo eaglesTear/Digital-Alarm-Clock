@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Alarm Clock</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+   
+    <div id="img-overlay" class="overlay">
+        <button type="button" class="closebtn" onclick="closeImageOverlay()">
+            Close
+        </button>
+        <h2 id="header-flash">Red Alert!!!</h2>
+        <div id="overlay-content">
+            <figure>
+                <img src="media/wake-up.jpg" alt="wake up text in cafe window" />
+                <figcaption>
+                    Photo by <a href="https://unsplash.com/@kate_kasi?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ekaterina Kasimova</a>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+    
+    <section class="clock-container">
+        <div id="day"></div>
+        <div id="date"></div>
+        <div id="month"></div>
+        <div id="year"></div>
+    </section>
+    
+    <section class="clock-container">
+        <div id="clock-display"></div>
+        <div id="AM-PM"></div>
+    </section>
+    
+    <section>
+        <select id="hours"></select>
+        <select id="minutes"></select>
+        <select id="seconds"></select>
+        <button type="button" id="startStop">Alarm Set</button>
+        <div id="alarm-time">No alarm set</div>
+    </section>
+    
+    <script src="main.js"></script>
+    
+</body>
+
+</html>

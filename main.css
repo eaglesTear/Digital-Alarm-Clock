@@ -1,0 +1,140 @@
+@font-face {
+    font-family: 'digital-7';
+    src: url('./font/digital-7.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'digital-7', monospace;
+    
+}
+
+body {
+    background-color: #000;
+}
+
+.clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 18vh;
+}
+
+#day,
+#date,
+#month,
+#year,
+#clock-display,
+#AM-PM,
+h2 {
+    font-size: 100px;
+    color: #1E90FF;
+    text-align: center;
+    margin-right: 1.5rem;
+}
+
+h1 {
+    margin-left: 1.8rem;
+}
+
+h2 {
+    color: #FF0000;
+    margin-left: -3000px;
+    transition: 2s;
+}
+
+@keyframes header-flash {
+    0% {
+        color: #000;
+    }
+
+    100% {
+        color: #FF0000;
+    }
+}
+
+@keyframes button-flash {
+    0% {
+        background-color: #FFF;
+    }
+
+    100% {
+        background-color: #FF8D1E;
+    }
+}
+
+@keyframes alarm-time-pulse {
+    0% {
+        font-size: 2rem;
+    }
+
+    50% {
+        font-size: 3rem;
+        text-shadow: 3px 3px 8px #FF0000;
+    }
+}
+
+#startStop,
+h2 {
+    animation: 1.5s ease-in-out infinite;
+}
+
+select,
+button {
+    display: block;
+    height: 40px;
+    font-size: 1.6rem;
+    margin: 1.5rem auto;
+    color: #000;
+    border: 1px solid #000;
+    width: 271px;
+    cursor: pointer;
+}
+
+button:active {
+    box-shadow: inset 0px 0px 5px #000000;
+}
+
+#alarm-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FF0000;
+    font-size: 2rem;
+    margin: 4rem;
+    height: 80px;
+    border: 2px solid #FF0000;
+    animation: 1.4s ease-in-out;
+}
+
+img {
+    width: 500px;
+    height: 400px;
+}
+
+figcaption,
+a {
+    color: #1E90FF;
+    font-size: 2rem;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    overflow-x: hidden;
+    transition: 2.5s;
+    white-space: nowrap;
+}
+
+#overlay-content {
+    position: relative;
+    top: 5%;
+    width: 100%;
+    text-align: center;
+}
