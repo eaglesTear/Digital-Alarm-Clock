@@ -2,13 +2,13 @@
 let hours = document.getElementById("hours");
 let minutes = document.getElementById("minutes");
 let seconds = document.getElementById("seconds");
-let am_pm = document.getElementById("AM-PM");
 let startStop = document.getElementById("startStop");
 let dayDisplay = document.getElementById("day");
 let dateDisplay = document.getElementById("date");
 let monthDisplay = document.getElementById("month");
 let yearDisplay = document.getElementById("year");
 let clockDisplay = document.getElementById("clock-display");
+let ampmDisplay = document.getElementById("ampm");
 let alarmTime = document.getElementById("alarm-time");
 let headerFlash = document.getElementById("header-flash");
 let getOverlay = document.getElementById("img-overlay");
@@ -25,12 +25,40 @@ let activeAlarm = false;
 let sound = new Audio("media/Fun-LovingSpirit.mp3");
 sound.loop = true;
 
-// DISPLAY CLOCK INTERFACE & RUN ALARM FEATURES WHEN SET ALARM TIME IS REACHED
+// DISPLAY CLOCK INTERFACE (24 HOUR FORMAT) & RUN ALARM FEATURES WHEN SET ALARM TIME IS REACHED
 function showTime() {
-    let now = new Date();
-    currentTime = now.toLocaleTimeString();
 
-    // RUN CHECK TO OUTPUT THE DAY OF THE WEEK IN NON-INTEGER FORMAT
+    let now = new Date();
+    currentTime = now.toLocaleTimeString('en-GB', {
+        hour12: false
+    });
+
+    // CONDITIONAL STATEMENTS TO ACTIVATE ALARM ELEMENTS
+    if (currentTime === alarmElement) {
+        sound.play();
+        getOverlay.style.width = "100%";
+        headerFlash.style.cssText = "animation-name: header-flash; margin-left: 0px";
+        startStop.style.animationName = "button-flash";
+    }
+
+    showDay();
+    showMonth();
+
+    // DISPLAY INDIVIDUAL DATE OBJECTS & RUN TIME / CLOCK
+    dayDisplay.innerHTML = getDay;
+    dateDisplay.innerHTML = getDate;
+    monthDisplay.innerHTML = getMonth;
+    yearDisplay.innerHTML = getYear;
+    clockDisplay.innerHTML = currentTime;
+
+    setTimeout(showTime, 1000);
+}
+
+showTime();
+
+// RUN CHECK TO OUTPUT THE DAY OF THE WEEK IN NON-INTEGER FORMAT
+function showDay() {
+
     switch (getDay) {
         case 0:
             getDay = "Sunday";
@@ -52,8 +80,16 @@ function showTime() {
             break;
         case 6:
             getDay = "Saturday";
+            break;
+
+        default:
+            //console.log("Check code.");
     }
-    // RUN CHECK TO OUTPUT THE MONTH OF THE YEAR IN NON-INTEGER FORMAT
+}
+
+// RUN CHECK TO OUTPUT THE MONTH OF THE YEAR IN NON-INTEGER FORMAT
+function showMonth() {
+
     switch (getMonth) {
         case 0:
             getMonth = "January";
@@ -90,23 +126,12 @@ function showTime() {
             break;
         case 11:
             getMonth = "December";
+            break;
+
+        default:
+            //console.log("Check code.");
     }
-    // CONDITIONAL STATEMENTS TO ACTIVATE ALARM ELEMENTS
-    if (currentTime === alarmElement) {
-        sound.play();
-        getOverlay.style.width = "100%";
-        headerFlash.style.cssText = "animation-name: header-flash; margin-left: 0px";
-        startStop.style.animationName = "button-flash";
-    }
-    // DISPLAY INDIVIDUAL DATE OBJECTS & RUN TIME / CLOCK
-    setTimeout(showTime, 1000);
-    dayDisplay.innerHTML = getDay;
-    dateDisplay.innerHTML = getDate;
-    monthDisplay.innerHTML = getMonth;
-    yearDisplay.innerHTML = getYear;
-    clockDisplay.innerHTML = currentTime;
 }
-showTime();
 
 // CLOSE IMAGE OVERLAY AFTER ALARM ACTIVATION (CLIENT ACTION)
 function closeImageOverlay() {
@@ -117,13 +142,15 @@ function closeImageOverlay() {
 
 // USE ES6 TERNARY OPERATOR TO DISPLAY AM OR PM
 function showAmPm() {
-    getHour >= 00 && getHour < 12 ? am_pm.innerHTML = "AM" : am_pm.innerHTML = "PM";
-    // document.location.reload()??? HOW TO GET PAGE TO REFRESH ON AM/PM CHANGE??? 
+    getHour >= 00 && getHour < 12 ? ampm.textContent = "AM" : ampm.textContent = "PM";
 }
-showAmPm();
+
+// CALL THE 'showAmPm' FUNCTION EACH SECOND, TO ENSURE AM & PM IS DYNAMIC WITH TIME CHANGE
+setTimeout(showAmPm, 1000);
 
 // LOOP THROUGH SELECT OPTIONS, ADDING EACH OPTION FOR CLIENT SELECTION
 function addMinSec(id) {
+
     let select = id;
     let min = 59;
 
@@ -133,6 +160,7 @@ function addMinSec(id) {
 }
 
 function addHour(id) {
+
     let select = id;
     let hour = 23;
 
@@ -145,8 +173,9 @@ addHour(hours);
 addMinSec(minutes);
 addMinSec(seconds);
 
-// 'SET ALARM' IS CLICKED > DISABLE OPTIONS, ASSIGN 'alarmElement' & ACTIVATE ANIMATION 
+// 'SET ALARM' IS CLICKED & DISABLE OPTIONS, ASSIGN 'alarmElement' & ACTIVATE ANIMATION 
 startStop.onclick = function () {
+
     if (activeAlarm === false) {
         hours.disabled = true;
         minutes.disabled = true;
@@ -156,17 +185,20 @@ startStop.onclick = function () {
         this.textContent = "Clear Alarm";
         alarmTime.innerHTML = "This alarm is set for: " + alarmElement;
         alarmTime.style.animationName = "alarm-time-pulse";
-
         activeAlarm = true;
-        // 'CLEAR ALARM' IS CLICKED > RE-ENABLE SELECTION...
+
+        // 'CLEAR ALARM' IS CLICKED & RE-ENABLE SELECTION...
     } else {
+
         hours.disabled = false;
         minutes.disabled = false;
         seconds.disabled = false;
+
         // STOP TRACK AND SET TRACK BACK TO START...
         sound.pause();
         sound.currentTime = 0;
-        // AND RESET ALL REQUIRED ANIMATIONS & VISUAL INTERFACE
+
+        // ...AND RESET ALL REQUIRED ANIMATIONS & VISUAL INTERFACE
         alarmTime.style.animationName = "";
         alarmTime.innerHTML = "No alarm set";
         headerFlash.innerHTML = "Red Alert!!!";
